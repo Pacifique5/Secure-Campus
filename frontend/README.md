@@ -1,6 +1,6 @@
-# SecureCampus Frontend
+# SecureCampus Frontend - Next.js
 
-React application with Tailwind CSS.
+Next.js 14 application with App Router and Tailwind CSS.
 
 ## Setup
 
@@ -14,10 +14,13 @@ npm install
 npm run dev
 ```
 
-Frontend will run on http://localhost:5173
+Frontend will run on http://localhost:3000
 
 ## Features
 
+- Next.js 14 with App Router
+- TypeScript for type safety
+- Server-side rendering (SSR)
 - Secure authentication (Login/Register)
 - Student Dashboard
   - Profile view
@@ -30,12 +33,20 @@ Frontend will run on http://localhost:5173
   - Suspicious activity alerts
   - System overview
 - Role-based access control
-- Protected routes
+- Client-side route protection
 
 ## Tech Stack
 
+- Next.js 14 (App Router)
 - React 18
-- React Router v6
+- TypeScript
 - Axios for API calls
 - Tailwind CSS for styling
-- Vite for build tooling
+
+## Routes
+
+- `/` - Home (redirects based on auth)
+- `/login` - Login page
+- `/register` - Register page
+- `/dashboard` - Student dashboard (protected)
+- `/admin` - Admin dashboard (admin only)

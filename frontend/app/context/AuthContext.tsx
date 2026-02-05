@@ -1,12 +1,35 @@
-import { createContext, useState, useContext, useEffect } from 'react'
+'use client'
+
+import { createContext, useState, useContext, useEffect, ReactNode } from 'react'
 import axios from 'axios'
 
-const AuthContext = createContext()
+interface User {
+  id: string
+  name: string
+  email: string
+  role: string
+}
 
-export const useAuth = () => useContext(AuthContext)
+interface AuthContextType {
+  user: User | null
+  loading: boolean
+  login: (email: string, password: string) => Promise<User>
+  register: (name: string, email: string, password: string) => Promise<User>
+  logout: () => void
+}
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
+const AuthContext = createContext<AuthContextType | undefined>(undefined)
+
+export const useAuth = () => {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useAuth must be used within AuthProvider')
+  }
+  return context
+}
+
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -20,7 +43,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(false)
   }, [])
 
-  const login = async (email, password) => {
+  const login = async (email: string, password: string) => {
     const response = await axios.post('http://localhost:3000/auth/login', {
       email,
       password,
@@ -36,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     return userData
   }
 
-  const register = async (name, email, password) => {
+  const register = async (name: string, email: string, password: string) => {
     const response = await axios.post('http://localhost:3000/auth/register', {
       name,
       email,

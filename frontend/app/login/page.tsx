@@ -1,16 +1,19 @@
+'use client'
+
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { useAuth } from '../context/AuthContext'
 
-const Login = () => {
+export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
+  const router = useRouter()
   const { login } = useAuth()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)
@@ -18,11 +21,11 @@ const Login = () => {
     try {
       const user = await login(email, password)
       if (user.role === 'ADMIN') {
-        navigate('/admin')
+        router.push('/admin')
       } else {
-        navigate('/dashboard')
+        router.push('/dashboard')
       }
-    } catch (err) {
+    } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed')
     } finally {
       setLoading(false)
@@ -76,8 +79,8 @@ const Login = () => {
         </form>
 
         <p className="text-center mt-4 text-gray-600">
-          Don't have an account?{' '}
-          <Link to="/register" className="text-blue-600 hover:underline">
+          Don&apos;t have an account?{' '}
+          <Link href="/register" className="text-blue-600 hover:underline">
             Register
           </Link>
         </p>
@@ -85,5 +88,3 @@ const Login = () => {
     </div>
   )
 }
-
-export default Login

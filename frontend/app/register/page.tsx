@@ -1,25 +1,28 @@
+'use client'
+
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { useAuth } from '../context/AuthContext'
 
-const Register = () => {
+export default function Register() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
+  const router = useRouter()
   const { register } = useAuth()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)
 
     try {
       await register(name, email, password)
-      navigate('/dashboard')
-    } catch (err) {
+      router.push('/dashboard')
+    } catch (err: any) {
       setError(err.response?.data?.message || 'Registration failed')
     } finally {
       setLoading(false)
@@ -87,7 +90,7 @@ const Register = () => {
 
         <p className="text-center mt-4 text-gray-600">
           Already have an account?{' '}
-          <Link to="/login" className="text-purple-600 hover:underline">
+          <Link href="/login" className="text-purple-600 hover:underline">
             Login
           </Link>
         </p>
@@ -95,5 +98,3 @@ const Register = () => {
     </div>
   )
 }
-
-export default Register

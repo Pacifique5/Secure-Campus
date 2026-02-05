@@ -1,21 +1,62 @@
+'use client'
+
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import { useAuth } from '../context/AuthContext'
 import axios from 'axios'
 
-const AdminDashboard = () => {
-  const { user, logout } = useAuth()
-  const navigate = useNavigate()
+interface User {
+  id: string
+  name: string
+  email: string
+  role: string
+  createdAt: string
+}
+
+interface Log {
+  id: string
+  action: string
+  ipAddress: string
+  userAgent: string
+  details: string
+  timestamp: string
+  user?: {
+    id: string
+    name: string
+    email: string
+  }
+}
+
+interface Attendance {
+  id: string
+  checkIn: string
+  user: {
+    id: string
+    name: string
+    email: string
+    role: string
+  }
+}
+
+export default function AdminDashboard() {
+  const { user, logout, loading } = useAuth()
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState('overview')
-  const [users, setUsers] = useState([])
-  const [logs, setLogs] = useState([])
-  const [suspiciousLogs, setSuspiciousLogs] = useState([])
-  const [attendance, setAttendance] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [users, setUsers] = useState<User[]>([])
+  const [logs, setLogs] = useState<Log[]>([])
+  const [suspiciousLogs, setSuspiciousLogs] = useState<Log[]>([])
+  const [attendance, setAttendance] = useState<Attendance[]>([])
+  const [dataLoading, setDataLoading] = useState(true)
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    if (!loading && !user) {
+      router.push('/login')
+    } else if (!loading && user?.role !== 'ADMIN') {
+      router.push('/dashboard')
+    } else if (user?.role === 'ADMIN') {
+      fetchData()
+    }
+  }, [user, loading, router])
 
   const fetchData = async () => {
     try {
@@ -32,22 +73,26 @@ const AdminDashboard = () => {
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
-      setLoading(false)
+      setDataLoading(false)
     }
   }
 
   const handleLogout = () => {
     logout()
-    navigate('/login')
+    router.push('/login')
   }
 
-  if (loading) {
+  if (loading || dataLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-xl">Loading...</div>
       </div>
     )
   }
+
+  const todayAttendance = attendance.filter(a => 
+    new Date(a.checkIn).toDateString() === new Date().toDateString()
+  ).length
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -57,7 +102,7 @@ const AdminDashboard = () => {
           <div className="flex items-center gap-4">
             <span className="text-white">Admin: {user?.name}</span>
             <button
-              onClick={() => navigate('/dashboard')}
+              onClick={() => router.push('/dashboard')}
               className="bg-white text-purple-600 px-4 py-2 rounded hover:bg-gray-100"
             >
               User View
@@ -87,12 +132,8 @@ const AdminDashboard = () => {
             <p className="text-3xl font-bold text-red-600">{suspiciousLogs.length}</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-gray-500 text-sm">Today's Attendance</h3>
-            <p className="text-3xl font-bold text-purple-600">
-              {attendance.filter(a => 
-                new Date(a.checkIn).toDateString() === new Date().toDateString()
-              ).length}
-            </p>
+            <h3 className="text-gray-500 text-sm">Today&apos;s Attendance</h3>
+            <p className="text-3xl font-bold text-purple-600">{todayAttendance}</p>
           </div>
         </div>
 
@@ -268,5 +309,3 @@ const AdminDashboard = () => {
     </div>
   )
 }
-
-export default AdminDashboard

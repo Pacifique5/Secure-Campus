@@ -1,19 +1,38 @@
+'use client'
+
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import { useAuth } from '../context/AuthContext'
 import axios from 'axios'
 
-const Dashboard = () => {
-  const { user, logout } = useAuth()
-  const navigate = useNavigate()
-  const [announcements, setAnnouncements] = useState([])
-  const [attendance, setAttendance] = useState([])
-  const [loading, setLoading] = useState(true)
+interface Announcement {
+  id: string
+  title: string
+  content: string
+  createdAt: string
+}
+
+interface Attendance {
+  id: string
+  checkIn: string
+  location: string
+}
+
+export default function Dashboard() {
+  const { user, logout, loading } = useAuth()
+  const router = useRouter()
+  const [announcements, setAnnouncements] = useState<Announcement[]>([])
+  const [attendance, setAttendance] = useState<Attendance[]>([])
+  const [dataLoading, setDataLoading] = useState(true)
   const [checkInMessage, setCheckInMessage] = useState('')
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    if (!loading && !user) {
+      router.push('/login')
+    } else if (user) {
+      fetchData()
+    }
+  }, [user, loading, router])
 
   const fetchData = async () => {
     try {
@@ -26,7 +45,7 @@ const Dashboard = () => {
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
-      setLoading(false)
+      setDataLoading(false)
     }
   }
 
@@ -38,7 +57,7 @@ const Dashboard = () => {
       setCheckInMessage('✅ Checked in successfully!')
       fetchData()
       setTimeout(() => setCheckInMessage(''), 3000)
-    } catch (error) {
+    } catch (error: any) {
       setCheckInMessage(error.response?.data?.message || '❌ Check-in failed')
       setTimeout(() => setCheckInMessage(''), 3000)
     }
@@ -46,10 +65,10 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     logout()
-    navigate('/login')
+    router.push('/login')
   }
 
-  if (loading) {
+  if (loading || dataLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-xl">Loading...</div>
@@ -66,7 +85,7 @@ const Dashboard = () => {
             <span className="text-gray-700">Welcome, {user?.name}</span>
             {user?.role === 'ADMIN' && (
               <button
-                onClick={() => navigate('/admin')}
+                onClick={() => router.push('/admin')}
                 className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
               >
                 Admin Panel
@@ -165,5 +184,3 @@ const Dashboard = () => {
     </div>
   )
 }
-
-export default Dashboard
