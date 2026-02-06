@@ -543,16 +543,16 @@ export default function Home() {
                 The most trusted platform for campus security and management worldwide.
               </p>
               <div className="flex gap-3">
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors">
+                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
                   <span>𝕏</span>
                 </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors">
+                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
                   <span>in</span>
                 </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors">
+                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
                   <span>f</span>
                 </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors">
+                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
                   <span>📷</span>
                 </a>
               </div>
@@ -562,11 +562,11 @@ export default function Home() {
             <div>
               <h3 className="text-white font-bold text-lg mb-4">Product</h3>
               <ul className="space-y-3">
-                <li><a href="#features" className="hover:text-primary-400 transition-colors">Features</a></li>
-                <li><a href="#analytics" className="hover:text-primary-400 transition-colors">Analytics</a></li>
-                <li><a href="#" className="hover:text-primary-400 transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-primary-400 transition-colors">Security</a></li>
-                <li><a href="#" className="hover:text-primary-400 transition-colors">Integrations</a></li>
+                <li><a href="#features" className="hover:text-blue-400 transition-colors">Features</a></li>
+                <li><a href="#analytics" className="hover:text-blue-400 transition-colors">Analytics</a></li>
+                <li><a href="#testimonials" className="hover:text-blue-400 transition-colors">Testimonials</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Pricing</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Security</a></li>
               </ul>
             </div>
 
@@ -574,11 +574,11 @@ export default function Home() {
             <div>
               <h3 className="text-white font-bold text-lg mb-4">Company</h3>
               <ul className="space-y-3">
-                <li><a href="#team" className="hover:text-primary-400 transition-colors">About Us</a></li>
-                <li><a href="#team" className="hover:text-primary-400 transition-colors">Team</a></li>
-                <li><a href="#" className="hover:text-primary-400 transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-primary-400 transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-primary-400 transition-colors">Press Kit</a></li>
+                <li><a href="#team" className="hover:text-blue-400 transition-colors">About Us</a></li>
+                <li><a href="#team" className="hover:text-blue-400 transition-colors">Team</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Careers</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Blog</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Press Kit</a></li>
               </ul>
             </div>
 
@@ -586,37 +586,12 @@ export default function Home() {
             <div>
               <h3 className="text-white font-bold text-lg mb-4">Support</h3>
               <ul className="space-y-3">
-                <li><a href="#" className="hover:text-primary-400 transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-primary-400 transition-colors">Documentation</a></li>
-                <li><a href="#" className="hover:text-primary-400 transition-colors">API Reference</a></li>
-                <li><a href="mailto:support@securecampus.com" className="hover:text-primary-400 transition-colors">Contact Support</a></li>
-                <li><a href="#" className="hover:text-primary-400 transition-colors">System Status</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Help Center</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Documentation</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">API Reference</a></li>
+                <li><a href="mailto:support@securecampus.com" className="hover:text-blue-400 transition-colors">Contact Support</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">System Status</a></li>
               </ul>
-            </div>
-          </div>
-
-          {/* Contact Info */}
-          <div className="border-t border-gray-800 pt-8 mb-8">
-            <div className="grid md:grid-cols-3 gap-6 text-center md:text-left">
-              <div>
-                <div className="text-2xl mb-2">📧</div>
-                <div className="text-white font-semibold">Email Us</div>
-                <a href="mailto:hello@securecampus.com" className="text-primary-400 hover:text-primary-300">
-                  hello@securecampus.com
-                </a>
-              </div>
-              <div>
-                <div className="text-2xl mb-2">📞</div>
-                <div className="text-white font-semibold">Call Us</div>
-                <a href="tel:+1234567890" className="text-primary-400 hover:text-primary-300">
-                  +1 (234) 567-890
-                </a>
-              </div>
-              <div>
-                <div className="text-2xl mb-2">📍</div>
-                <div className="text-white font-semibold">Visit Us</div>
-                <p className="text-gray-400">123 Campus Drive, Tech City, TC 12345</p>
-              </div>
             </div>
           </div>
 
@@ -626,9 +601,9 @@ export default function Home() {
               © 2026 SecureCampus. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm">
-              <a href="#" className="hover:text-primary-400 transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-primary-400 transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-primary-400 transition-colors">Cookie Policy</a>
+              <a href="#" className="hover:text-blue-400 transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-blue-400 transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-blue-400 transition-colors">Cookie Policy</a>
             </div>
           </div>
         </div>
