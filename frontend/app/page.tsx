@@ -94,8 +94,8 @@ export default function Home() {
             <div className="hidden md:flex items-center space-x-8">
               <a href="#features" className="text-gray-700 hover:text-primary-600 font-medium transition-colors">Features</a>
               <a href="#analytics" className="text-gray-700 hover:text-primary-600 font-medium transition-colors">Analytics</a>
+              <a href="#testimonials" className="text-gray-700 hover:text-primary-600 font-medium transition-colors">Testimonials</a>
               <a href="#team" className="text-gray-700 hover:text-primary-600 font-medium transition-colors">Team</a>
-              <a href="#contact" className="text-gray-700 hover:text-primary-600 font-medium transition-colors">Contact</a>
             </div>
             <div className="flex items-center space-x-4">
               <Link href="/login" className="text-gray-700 hover:text-primary-600 font-medium transition-colors">
@@ -232,7 +232,7 @@ export default function Home() {
           </div>
 
           {/* Main Dashboard Preview */}
-          <div className="bg-white rounded-3xl shadow-2xl p-8 mb-8 border border-gray-100">
+          <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
             <div className="grid md:grid-cols-4 gap-6 mb-8">
               {[
                 { label: 'Total Students', value: '2,847', change: '+12%', icon: '👥', color: 'from-blue-500 to-blue-600', bgColor: 'bg-blue-50' },
@@ -256,112 +256,161 @@ export default function Home() {
             </div>
 
             {/* Charts Section */}
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Attendance Chart */}
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl">
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Attendance Trend Line Chart */}
+              <div className="md:col-span-2 bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-bold text-gray-800">Weekly Attendance</h3>
-                  <span className="text-xs text-gray-500 bg-white px-3 py-1 rounded-full">Last 7 days</span>
+                  <h3 className="text-lg font-bold text-gray-800">📈 Attendance Trend</h3>
+                  <span className="text-xs text-gray-500 bg-white px-3 py-1 rounded-full">Last 30 days</span>
                 </div>
-                <div className="space-y-4">
-                  {[
-                    { day: 'Mon', value: 92, color: 'bg-gradient-to-r from-blue-500 to-blue-600' },
-                    { day: 'Tue', value: 88, color: 'bg-gradient-to-r from-indigo-500 to-indigo-600' },
-                    { day: 'Wed', value: 95, color: 'bg-gradient-to-r from-purple-500 to-purple-600' },
-                    { day: 'Thu', value: 90, color: 'bg-gradient-to-r from-blue-500 to-blue-600' },
-                    { day: 'Fri', value: 94, color: 'bg-gradient-to-r from-indigo-500 to-indigo-600' },
-                    { day: 'Sat', value: 78, color: 'bg-gradient-to-r from-gray-400 to-gray-500' },
-                    { day: 'Sun', value: 65, color: 'bg-gradient-to-r from-gray-400 to-gray-500' }
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center gap-4">
-                      <div className="w-12 text-sm font-bold text-gray-700">{item.day}</div>
-                      <div className="flex-1 bg-white rounded-full h-10 overflow-hidden shadow-inner">
-                        <div
-                          className={`${item.color} h-full rounded-full flex items-center justify-end pr-4 text-white text-sm font-bold transition-all duration-1000 shadow-lg`}
-                          style={{ width: `${item.value}%` }}
-                        >
-                          {item.value}%
+                <div className="relative h-64">
+                  {/* Y-axis labels */}
+                  <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-between text-xs text-gray-500 pr-2">
+                    <span>100%</span>
+                    <span>75%</span>
+                    <span>50%</span>
+                    <span>25%</span>
+                    <span>0%</span>
+                  </div>
+                  
+                  {/* Chart area */}
+                  <div className="ml-8 h-full relative">
+                    {/* Grid lines */}
+                    <div className="absolute inset-0 flex flex-col justify-between">
+                      {[...Array(5)].map((_, i) => (
+                        <div key={i} className="border-t border-gray-200"></div>
+                      ))}
+                    </div>
+                    
+                    {/* Line chart simulation */}
+                    <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="#3b82f6" />
+                          <stop offset="50%" stopColor="#8b5cf6" />
+                          <stop offset="100%" stopColor="#ec4899" />
+                        </linearGradient>
+                        <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.3" />
+                          <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                      
+                      {/* Area under curve */}
+                      <path
+                        d="M 0 80 Q 25 60, 50 65 T 100 55 T 150 60 T 200 50 T 250 55 T 300 45 T 350 50 T 400 40 L 400 100 L 0 100 Z"
+                        fill="url(#areaGradient)"
+                        className="animate-fade-in"
+                      />
+                      
+                      {/* Line */}
+                      <path
+                        d="M 0 80 Q 25 60, 50 65 T 100 55 T 150 60 T 200 50 T 250 55 T 300 45 T 350 50 T 400 40"
+                        fill="none"
+                        stroke="url(#lineGradient)"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        className="animate-fade-in"
+                      />
+                      
+                      {/* Data points */}
+                      {[0, 50, 100, 150, 200, 250, 300, 350, 400].map((x, i) => {
+                        const y = [80, 65, 55, 60, 50, 55, 45, 50, 40][i]
+                        return (
+                          <circle
+                            key={i}
+                            cx={x}
+                            cy={y}
+                            r="4"
+                            fill="white"
+                            stroke="#3b82f6"
+                            strokeWidth="2"
+                            className="animate-fade-in"
+                          />
+                        )
+                      })}
+                    </svg>
+                  </div>
+                </div>
+                <div className="flex justify-between mt-4 text-xs text-gray-500">
+                  <span>Week 1</span>
+                  <span>Week 2</span>
+                  <span>Week 3</span>
+                  <span>Week 4</span>
+                </div>
+              </div>
+
+              {/* Donut Chart - Security Status */}
+              <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-2xl">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-lg font-bold text-gray-800">🔐 Security</h3>
+                  <span className="text-xs text-gray-500 bg-white px-3 py-1 rounded-full">Today</span>
+                </div>
+                <div className="flex items-center justify-center mb-6">
+                  <div className="relative w-40 h-40">
+                    <svg className="w-full h-full transform -rotate-90">
+                      {/* Background circle */}
+                      <circle
+                        cx="80"
+                        cy="80"
+                        r="70"
+                        fill="none"
+                        stroke="#e5e7eb"
+                        strokeWidth="12"
+                      />
+                      {/* Progress circle */}
+                      <circle
+                        cx="80"
+                        cy="80"
+                        r="70"
+                        fill="none"
+                        stroke="url(#donutGradient)"
+                        strokeWidth="12"
+                        strokeDasharray="440"
+                        strokeDashoffset="22"
+                        strokeLinecap="round"
+                        className="animate-fade-in"
+                      />
+                      <defs>
+                        <linearGradient id="donutGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#8b5cf6" />
+                          <stop offset="100%" stopColor="#ec4899" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                          95%
                         </div>
+                        <div className="text-xs text-gray-600">Secure</div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { label: 'Access Granted', value: '2,847', color: 'bg-green-500' },
+                    { label: 'Blocked', value: '12', color: 'bg-red-500' },
+                    { label: 'Pending', value: '45', color: 'bg-yellow-500' }
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className={`w-3 h-3 rounded-full ${item.color}`}></div>
+                        <span className="text-sm text-gray-700">{item.label}</span>
+                      </div>
+                      <span className="text-sm font-bold text-gray-900">{item.value}</span>
                     </div>
                   ))}
                 </div>
               </div>
-
-              {/* Activity Heatmap */}
-              <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-2xl">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-bold text-gray-800">Activity Heatmap</h3>
-                  <span className="text-xs text-gray-500 bg-white px-3 py-1 rounded-full">Peak Hours</span>
-                </div>
-                <div className="grid grid-cols-7 gap-2">
-                  {Array.from({ length: 35 }).map((_, index) => {
-                    const intensity = Math.random()
-                    const bgColor = intensity > 0.7 ? 'bg-gradient-to-br from-purple-500 to-purple-600' :
-                                   intensity > 0.4 ? 'bg-gradient-to-br from-purple-300 to-purple-400' :
-                                   intensity > 0.2 ? 'bg-gradient-to-br from-purple-200 to-purple-300' :
-                                   'bg-gray-200'
-                    return (
-                      <div
-                        key={index}
-                        className={`${bgColor} aspect-square rounded-lg card-hover shadow-sm`}
-                        title={`Activity: ${Math.round(intensity * 100)}%`}
-                      ></div>
-                    )
-                  })}
-                </div>
-                <div className="flex items-center justify-between mt-4 text-xs text-gray-600">
-                  <span>Less</span>
-                  <div className="flex gap-1">
-                    <div className="w-4 h-4 bg-gray-200 rounded"></div>
-                    <div className="w-4 h-4 bg-purple-200 rounded"></div>
-                    <div className="w-4 h-4 bg-purple-400 rounded"></div>
-                    <div className="w-4 h-4 bg-purple-600 rounded"></div>
-                  </div>
-                  <span>More</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Live Feed */}
-          <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-gray-800">🔴 Live Activity Feed</h3>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-sm text-gray-600 font-medium">Live</span>
-              </div>
-            </div>
-            <div className="grid md:grid-cols-2 gap-4">
-              {[
-                { user: 'Sarah Johnson', action: 'checked in at Main Building', time: 'Just now', icon: '✅', color: 'from-green-400 to-green-500' },
-                { user: 'Mike Chen', action: 'accessed Lab 3', time: '2 min ago', icon: '🔐', color: 'from-blue-400 to-blue-500' },
-                { user: 'Emily Davis', action: 'submitted assignment', time: '5 min ago', icon: '📄', color: 'from-purple-400 to-purple-500' },
-                { user: 'Alex Kumar', action: 'joined virtual class', time: '8 min ago', icon: '💻', color: 'from-indigo-400 to-indigo-500' },
-                { user: 'Lisa Wang', action: 'checked out', time: '12 min ago', icon: '👋', color: 'from-orange-400 to-orange-500' },
-                { user: 'Tom Brown', action: 'updated profile', time: '15 min ago', icon: '👤', color: 'from-pink-400 to-pink-500' }
-              ].map((activity, index) => (
-                <div key={index} className="flex items-center gap-4 p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl hover:shadow-md transition-all border border-gray-100">
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${activity.color} flex items-center justify-center text-xl shadow-lg`}>
-                    {activity.icon}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-gray-800 truncate">
-                      {activity.user}
-                    </div>
-                    <div className="text-sm text-gray-600 truncate">{activity.action}</div>
-                    <div className="text-xs text-gray-400 mt-1">{activity.time}</div>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
       </div>
 
       {/* Testimonials Section */}
-      <div className="py-20 bg-white">
+      <div id="testimonials" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -372,6 +421,43 @@ export default function Home() {
             </p>
           </div>
 
+          {/* Auto-scrolling Testimonials */}
+          <div className="mb-16 overflow-hidden">
+            <div className="flex gap-6 animate-scroll">
+              {[...Array(2)].map((_, setIndex) => (
+                <div key={setIndex} className="flex gap-6 flex-shrink-0">
+                  {[
+                    { name: 'Dr. Jennifer Martinez', role: 'Dean', institution: 'Stanford', avatar: '👩‍🎓', text: 'SecureCampus has transformed our campus security completely!', color: 'from-blue-500 to-blue-600' },
+                    { name: 'Prof. David Kim', role: 'IT Director', institution: 'MIT', avatar: '👨‍💼', text: 'The most intuitive platform we\'ve ever used. Highly recommended!', color: 'from-purple-500 to-purple-600' },
+                    { name: 'Maria Rodriguez', role: 'Security Chief', institution: 'Harvard', avatar: '👩‍💻', text: 'Finally, a security platform that actually works as promised!', color: 'from-indigo-500 to-indigo-600' },
+                    { name: 'James Wilson', role: 'Administrator', institution: 'Oxford', avatar: '👨‍🏫', text: 'The attendance tracking alone has saved us countless hours.', color: 'from-green-500 to-green-600' },
+                    { name: 'Dr. Aisha Patel', role: 'Vice Chancellor', institution: 'Cambridge', avatar: '👩‍⚕️', text: 'Exceeded our expectations in every way. Essential tool!', color: 'from-pink-500 to-pink-600' },
+                    { name: 'Robert Chen', role: 'Director', institution: 'Yale', avatar: '👨‍🔬', text: 'Best investment in campus technology. ROI in first month!', color: 'from-orange-500 to-orange-600' }
+                  ].map((testimonial, index) => (
+                    <div key={index} className="w-80 flex-shrink-0 bg-gradient-to-br from-gray-50 to-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${testimonial.color} flex items-center justify-center text-2xl shadow-md`}>
+                          {testimonial.avatar}
+                        </div>
+                        <div>
+                          <div className="font-bold text-gray-900 text-sm">{testimonial.name}</div>
+                          <div className="text-xs text-gray-600">{testimonial.role} • {testimonial.institution}</div>
+                        </div>
+                      </div>
+                      <div className="flex gap-1 mb-3">
+                        {[...Array(5)].map((_, i) => (
+                          <span key={i} className="text-yellow-400">⭐</span>
+                        ))}
+                      </div>
+                      <p className="text-gray-700 text-sm italic">"{testimonial.text}"</p>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Static Testimonials Grid */}
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
@@ -526,6 +612,54 @@ export default function Home() {
             </a>
           </div>
           <p className="text-white/90 mt-6 text-sm">✨ No credit card required • 14-day free trial • Cancel anytime</p>
+        </div>
+      </div>
+
+      {/* Contact Section - Before Footer */}
+      <div className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            Get in Touch
+          </h2>
+          <p className="text-xl text-gray-600 mb-12">
+            Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+          </p>
+          
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div className="bg-white p-8 rounded-2xl shadow-lg card-hover">
+              <div className="text-4xl mb-4">📧</div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Email Us</h3>
+              <a href="mailto:hello@securecampus.com" className="text-blue-600 hover:text-blue-700 font-medium">
+                hello@securecampus.com
+              </a>
+            </div>
+            
+            <div className="bg-white p-8 rounded-2xl shadow-lg card-hover">
+              <div className="text-4xl mb-4">📞</div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Call Us</h3>
+              <a href="tel:+1234567890" className="text-blue-600 hover:text-blue-700 font-medium">
+                +1 (234) 567-890
+              </a>
+            </div>
+            
+            <div className="bg-white p-8 rounded-2xl shadow-lg card-hover">
+              <div className="text-4xl mb-4">📍</div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Visit Us</h3>
+              <p className="text-gray-600">
+                123 Campus Drive<br />
+                Tech City, TC 12345
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="mailto:hello@securecampus.com" className="btn-primary text-lg px-8 py-4">
+              Send Email
+            </a>
+            <a href="tel:+1234567890" className="btn-secondary text-lg px-8 py-4">
+              Call Now
+            </a>
+          </div>
         </div>
       </div>
 
