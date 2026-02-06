@@ -30,19 +30,25 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md border border-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md border border-gray-100 animate-fade-in-up">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-block mb-4 text-primary-600 hover:text-primary-700 transition-colors">
-            <h1 className="text-3xl font-bold">🔐 SecureCampus</h1>
+          <Link href="/" className="inline-block mb-4 text-blue-600 hover:text-blue-700 transition-colors">
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-4xl">🔐</span>
+              <h1 className="text-3xl font-bold gradient-text">SecureCampus</h1>
+            </div>
           </Link>
-          <h2 className="text-2xl font-bold text-gray-800">Get Started</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mt-4">Get Started</h2>
           <p className="text-gray-600 mt-2">Create your account to continue</p>
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
-            {error}
+          <div className="bg-red-50 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm animate-slide-in">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">⚠️</span>
+              <span>{error}</span>
+            </div>
           </div>
         )}
 
@@ -53,7 +59,7 @@ export default function Register() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               placeholder="John Doe"
               required
             />
@@ -65,7 +71,7 @@ export default function Register() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               placeholder="you@example.com"
               required
             />
@@ -77,31 +83,44 @@ export default function Register() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               placeholder="••••••••"
               minLength={8}
               required
             />
-            <p className="text-sm text-gray-500 mt-1">Minimum 8 characters</p>
+            <p className="text-sm text-gray-500 mt-2 flex items-center gap-1">
+              <span>🔒</span>
+              <span>Minimum 8 characters</span>
+            </p>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full btn-primary py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full btn-primary py-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
-            {loading ? 'Creating account...' : 'Create Account'}
+            {loading ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <span>Creating account...</span>
+              </>
+            ) : (
+              <>
+                <span>Create Account</span>
+                <span>→</span>
+              </>
+            )}
           </button>
         </form>
 
         <div className="mt-6 text-center">
           <p className="text-gray-600">
             Already have an account?{' '}
-            <Link href="/login" className="text-primary-600 hover:text-primary-700 font-semibold hover:underline">
+            <Link href="/login" className="text-blue-600 hover:text-blue-700 font-semibold hover:underline">
               Login
             </Link>
           </p>
-          <Link href="/" className="block mt-4 text-sm text-gray-500 hover:text-gray-700">
+          <Link href="/" className="block mt-4 text-sm text-gray-500 hover:text-gray-700 transition-colors">
             ← Back to Home
           </Link>
         </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useState, useContext, useEffect, ReactNode } from 'react'
-import axios from 'axios'
+import api from '@/lib/api'
 
 interface User {
   id: string
@@ -38,13 +38,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     
     if (token && userData) {
       setUser(JSON.parse(userData))
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     }
     setLoading(false)
   }, [])
 
   const login = async (email: string, password: string) => {
-    const response = await axios.post('http://localhost:3000/auth/login', {
+    const response = await api.post('/auth/login', {
       email,
       password,
     })
@@ -53,14 +52,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     
     localStorage.setItem('token', access_token)
     localStorage.setItem('user', JSON.stringify(userData))
-    axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`
     
     setUser(userData)
     return userData
   }
 
   const register = async (name: string, email: string, password: string) => {
-    const response = await axios.post('http://localhost:3000/auth/register', {
+    const response = await api.post('/auth/register', {
       name,
       email,
       password,
@@ -70,7 +68,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     
     localStorage.setItem('token', access_token)
     localStorage.setItem('user', JSON.stringify(userData))
-    axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`
     
     setUser(userData)
     return userData
@@ -79,7 +76,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
-    delete axios.defaults.headers.common['Authorization']
     setUser(null)
   }
 

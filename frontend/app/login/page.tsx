@@ -33,19 +33,25 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md border border-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md border border-gray-100 animate-fade-in-up">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-block mb-4 text-primary-600 hover:text-primary-700 transition-colors">
-            <h1 className="text-3xl font-bold">🔐 SecureCampus</h1>
+          <Link href="/" className="inline-block mb-4 text-blue-600 hover:text-blue-700 transition-colors">
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-4xl">🔐</span>
+              <h1 className="text-3xl font-bold gradient-text">SecureCampus</h1>
+            </div>
           </Link>
-          <h2 className="text-2xl font-bold text-gray-800">Welcome Back</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mt-4">Welcome Back</h2>
           <p className="text-gray-600 mt-2">Login to access your account</p>
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
-            {error}
+          <div className="bg-red-50 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm animate-slide-in">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">⚠️</span>
+              <span>{error}</span>
+            </div>
           </div>
         )}
 
@@ -56,7 +62,7 @@ export default function Login() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               placeholder="you@example.com"
               required
             />
@@ -68,7 +74,7 @@ export default function Login() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               placeholder="••••••••"
               required
             />
@@ -77,20 +83,30 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full btn-primary py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full btn-primary py-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <span>Logging in...</span>
+              </>
+            ) : (
+              <>
+                <span>Login</span>
+                <span>→</span>
+              </>
+            )}
           </button>
         </form>
 
         <div className="mt-6 text-center">
           <p className="text-gray-600">
             Don&apos;t have an account?{' '}
-            <Link href="/register" className="text-primary-600 hover:text-primary-700 font-semibold hover:underline">
+            <Link href="/register" className="text-blue-600 hover:text-blue-700 font-semibold hover:underline">
               Create Account
             </Link>
           </p>
-          <Link href="/" className="block mt-4 text-sm text-gray-500 hover:text-gray-700">
+          <Link href="/" className="block mt-4 text-sm text-gray-500 hover:text-gray-700 transition-colors">
             ← Back to Home
           </Link>
         </div>
