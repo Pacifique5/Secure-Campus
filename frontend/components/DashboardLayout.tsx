@@ -52,8 +52,8 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar */}
-      <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-gradient-to-b from-blue-600 to-indigo-700 text-white transition-all duration-300 flex flex-col`}>
+      {/* Sidebar - Fixed */}
+      <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-gradient-to-b from-blue-600 to-indigo-700 text-white transition-all duration-300 flex flex-col fixed h-screen z-40`}>
         <div className="p-4 flex items-center justify-between border-b border-blue-500">
           {sidebarOpen && (
             <Link href="/" className="flex items-center gap-2">
@@ -69,7 +69,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
           </button>
         </div>
 
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
           {menu.map((item, index) => (
             <Link
               key={index}
@@ -93,8 +93,8 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
         </div>
       </aside>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      {/* Main Content - With margin to account for fixed sidebar */}
+      <div className={`flex-1 flex flex-col ${sidebarOpen ? 'ml-64' : 'ml-20'} transition-all duration-300`}>
         {/* Top Bar */}
         <header className="bg-white shadow-sm border-b border-gray-200">
           <div className="px-6 py-4 flex items-center justify-between">
