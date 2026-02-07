@@ -22,7 +22,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
 
   const studentMenu = [
     { icon: '📊', label: 'Dashboard', href: '/dashboard' },
-    { icon: '✅', label: 'Attendance', href: '/dashboard/attendance' },
+    { icon: '✓', label: 'Attendance', href: '/dashboard/attendance' },
     { icon: '📢', label: 'Announcements', href: '/dashboard/announcements' },
     { icon: '🔒', label: 'Security', href: '/dashboard/security' },
     { icon: '👤', label: 'Profile', href: '/dashboard/profile' },
@@ -31,7 +31,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
 
   const staffMenu = [
     { icon: '📊', label: 'Dashboard', href: '/dashboard' },
-    { icon: '✅', label: 'Attendance', href: '/dashboard/attendance' },
+    { icon: '✓', label: 'Attendance', href: '/dashboard/attendance' },
     { icon: '👥', label: 'Students', href: '/dashboard/students' },
     { icon: '📢', label: 'Announcements', href: '/dashboard/announcements' },
     { icon: '🔒', label: 'Security', href: '/dashboard/security' },
@@ -42,10 +42,10 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
     { icon: '📊', label: 'Dashboard', href: '/admin' },
     { icon: '🔐', label: 'Security Center', href: '/admin/security' },
     { icon: '👥', label: 'Users', href: '/admin/users' },
-    { icon: '✅', label: 'Attendance', href: '/admin/attendance' },
-    { icon: '📜', label: 'Audit Logs', href: '/admin/logs' },
+    { icon: '✓', label: 'Attendance', href: '/admin/attendance' },
+    { icon: '📋', label: 'Audit Logs', href: '/admin/logs' },
     { icon: '📢', label: 'Announcements', href: '/admin/announcements' },
-    { icon: '⚙️', label: 'Settings', href: '/admin/settings' }
+    { icon: '⚙', label: 'Settings', href: '/admin/settings' }
   ]
 
   const menu = role === 'ADMIN' ? adminMenu : role === 'STAFF' ? staffMenu : studentMenu
@@ -57,27 +57,27 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
         <div className="p-4 flex items-center justify-between border-b border-blue-500">
           {sidebarOpen && (
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl">🔐</span>
-              <span className="font-bold text-lg">SecureCampus</span>
+              <span className="text-xl">🔐</span>
+              <span className="font-bold text-base">SecureCampus</span>
             </Link>
           )}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 hover:bg-blue-500 rounded-lg transition-colors"
+            className="p-2 hover:bg-blue-500 rounded-lg transition-colors text-sm"
           >
             {sidebarOpen ? '◀' : '▶'}
           </button>
         </div>
 
-        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {menu.map((item, index) => (
             <Link
               key={index}
               href={item.href}
               className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-500 transition-colors group"
             >
-              <span className="text-2xl">{item.icon}</span>
-              {sidebarOpen && <span className="font-medium">{item.label}</span>}
+              <span className="text-lg">{item.icon}</span>
+              {sidebarOpen && <span className="font-medium text-sm">{item.label}</span>}
             </Link>
           ))}
         </nav>
@@ -87,8 +87,8 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
             onClick={handleLogout}
             className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-red-500 transition-colors"
           >
-            <span className="text-2xl">🚪</span>
-            {sidebarOpen && <span className="font-medium">Logout</span>}
+            <span className="text-lg">🚪</span>
+            {sidebarOpen && <span className="font-medium text-sm">Logout</span>}
           </button>
         </div>
       </aside>
