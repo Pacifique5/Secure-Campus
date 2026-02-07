@@ -87,7 +87,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
             onClick={handleLogout}
             className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-red-500 transition-colors"
           >
-            <span className="text-lg">🚪➡️</span>
+            <span className="text-lg">⏻</span>
             {sidebarOpen && <span className="font-medium text-sm">Logout</span>}
           </button>
         </div>
