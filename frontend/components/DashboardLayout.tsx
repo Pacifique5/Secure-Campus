@@ -4,6 +4,7 @@ import { ReactNode, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/app/context/AuthContext'
+import { useTheme } from '@/app/context/ThemeContext'
 
 interface DashboardLayoutProps {
   children: ReactNode
@@ -12,6 +13,7 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children, role }: DashboardLayoutProps) {
   const { user, logout } = useAuth()
+  const { darkMode, toggleDarkMode } = useTheme()
   const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
@@ -51,10 +53,10 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
   const menu = role === 'ADMIN' ? adminMenu : role === 'STAFF' ? staffMenu : studentMenu
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-50'} flex transition-colors duration-300`}>
       {/* Sidebar - Fixed */}
-      <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-gradient-to-b from-blue-600 to-indigo-700 text-white transition-all duration-300 flex flex-col fixed h-screen z-40`}>
-        <div className="p-4 flex items-center justify-between border-b border-blue-500">
+      <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} ${darkMode ? 'bg-gradient-to-b from-gray-800 to-gray-900' : 'bg-gradient-to-b from-blue-600 to-indigo-700'} text-white transition-all duration-300 flex flex-col fixed h-screen z-40`}>
+        <div className={`p-4 flex items-center justify-between border-b ${darkMode ? 'border-gray-700' : 'border-blue-500'}`}>
           {sidebarOpen && (
             <Link href="/" className="flex items-center gap-2">
               <span className="text-xl">🔐</span>
@@ -63,7 +65,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
           )}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 hover:bg-blue-500 rounded-lg transition-colors text-sm"
+            className={`p-2 ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-blue-500'} rounded-lg transition-colors text-sm`}
           >
             {sidebarOpen ? '◀' : '▶'}
           </button>
@@ -74,7 +76,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
             <Link
               key={index}
               href={item.href}
-              className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-500 transition-colors group"
+              className={`flex items-center gap-3 p-3 rounded-lg ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-blue-500'} transition-colors group`}
             >
               <span className="text-lg">{item.icon}</span>
               {sidebarOpen && <span className="font-medium text-sm">{item.label}</span>}
@@ -82,7 +84,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
           ))}
         </nav>
 
-        <div className="p-4 border-t border-blue-500">
+        <div className={`p-4 border-t ${darkMode ? 'border-gray-700' : 'border-blue-500'}`}>
           <button
             onClick={handleLogout}
             className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-red-500 transition-colors"
@@ -96,30 +98,39 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
       {/* Main Content - With margin to account for fixed sidebar */}
       <div className={`flex-1 flex flex-col ${sidebarOpen ? 'ml-64' : 'ml-20'} transition-all duration-300`}>
         {/* Top Bar */}
-        <header className="bg-white shadow-sm border-b border-gray-200">
+        <header className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} shadow-sm border-b transition-colors duration-300`}>
           <div className="px-6 py-4 flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                 {role === 'ADMIN' ? 'Admin Dashboard' : role === 'STAFF' ? 'Staff Dashboard' : 'Student Dashboard'}
               </h1>
-              <p className="text-sm text-gray-600">Welcome back, {user?.name}!</p>
+              <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Welcome back, {user?.name}!</p>
             </div>
             
             <div className="flex items-center gap-4">
+              {/* Dark Mode Toggle */}
+              <button
+                onClick={toggleDarkMode}
+                className={`p-2 ${darkMode ? 'bg-gray-700 text-yellow-400' : 'bg-gray-100 text-gray-700'} hover:scale-110 rounded-lg transition-all`}
+                aria-label="Toggle dark mode"
+              >
+                {darkMode ? '☀️' : '🌙'}
+              </button>
+
               {/* Notifications */}
-              <button className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors">
+              <button className={`relative p-2 ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-lg transition-colors`}>
                 <span className="text-2xl">🔔</span>
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
 
               {/* Profile */}
-              <div className="flex items-center gap-3 p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer">
+              <div className={`flex items-center gap-3 p-2 ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-lg transition-colors cursor-pointer`}>
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold">
                   {user?.name?.charAt(0).toUpperCase()}
                 </div>
                 <div className="text-left">
-                  <div className="font-semibold text-sm text-gray-900">{user?.name}</div>
-                  <div className="text-xs text-gray-500">{user?.role}</div>
+                  <div className={`font-semibold text-sm ${darkMode ? 'text-white' : 'text-gray-900'}`}>{user?.name}</div>
+                  <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{user?.role}</div>
                 </div>
               </div>
             </div>

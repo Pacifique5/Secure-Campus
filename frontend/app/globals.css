@@ -4,11 +4,15 @@
 
 @layer base {
   body {
-    @apply bg-white text-gray-900;
+    @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100;
   }
   
   html {
     scroll-behavior: smooth;
+  }
+  
+  html.dark {
+    color-scheme: dark;
   }
 }
 

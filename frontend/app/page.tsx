@@ -2,46 +2,23 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { useTheme } from './context/ThemeContext'
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
   const [scrollY, setScrollY] = useState(0)
-  const [activeTestimonial, setActiveTestimonial] = useState(0)
-  const [darkMode, setDarkMode] = useState(false)
+  const { darkMode, toggleDarkMode } = useTheme()
 
   useEffect(() => {
     setMounted(true)
     
-    // Check for saved theme preference
-    const savedTheme = localStorage.getItem('theme')
-    if (savedTheme === 'dark') {
-      setDarkMode(true)
-      document.documentElement.classList.add('dark')
-    }
-    
     const handleScroll = () => setScrollY(window.scrollY)
     window.addEventListener('scroll', handleScroll)
     
-    const interval = setInterval(() => {
-      setActiveTestimonial(prev => (prev + 1) % 6)
-    }, 5000)
-    
     return () => {
       window.removeEventListener('scroll', handleScroll)
-      clearInterval(interval)
     }
   }, [])
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode)
-    if (!darkMode) {
-      document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
-    }
-  }
 
   const team = [
     { 
