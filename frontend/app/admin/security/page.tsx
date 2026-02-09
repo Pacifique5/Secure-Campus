@@ -10,7 +10,12 @@ export default function SecurityCenter() {
   const { user, loading } = useAuth()
   const router = useRouter()
   const [securityAlerts, setSecurityAlerts] = useState([])
-  const [intrusionRules, setIntrusionRules] = useState({
+  const [intrusionRules, setIntrusionRules] = useState<{
+    maxLoginAttempts: number
+    sessionDuration: number
+    autoLockEnabled: boolean
+    ipBlacklist: string[]
+  }>({
     maxLoginAttempts: 5,
     sessionDuration: 24,
     autoLockEnabled: true,
